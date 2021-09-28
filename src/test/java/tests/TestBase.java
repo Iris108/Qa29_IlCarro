@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -52,22 +54,32 @@ public class TestBase {
     }
 
     public void submitForm() {
-        click(By.xpath("button [type='Submit']"));
+        click(By.xpath("//button [@type='submit']"));
     }
 
     //h2[text()='Logged in success']
-    public boolean isLogged() {
+    public boolean isLoggedSuccess() {
         String text = wd.findElement(By.cssSelector(".dialog-container h2")).getText();
-        click(By.xpath("(//button[text()='Ok']"));
         return text.equals("Logged in success");
+    }
+    public boolean isLogged(){
+        return wd.findElements(By.xpath("//a[.='Log in']")).size() > 0;
     }
 
     public void logout() {
-       click(By.xpath("//a[text()='Logout']"));
+    new WebDriverWait(wd,10).until(ExpectedConditions.visibilityOf(wd.findElement(By.xpath("//a[text()=' Logout ']"))));
+       click(By.xpath("//a[text()=' Logout ']"));
+
+    }
+
+    public void clickOkButton(){
+        if(isElementPresent(By.xpath("//button[.='Ok']"))){
+            click(By.xpath("//button[.='Ok']"));
+        }
     }
 
     public boolean isLogoutPresent(){
-        return isElementPresent(By.xpath("//a[text()='Logout']"));
+        return isElementPresent(By.xpath("//a[text()=' Logout ']"));
     }
     public boolean isElementPresent(By locator){
         return wd.findElements(locator).size()>0;
