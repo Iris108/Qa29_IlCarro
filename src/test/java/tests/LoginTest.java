@@ -1,5 +1,5 @@
 package tests;
-import org.testng.annotations.BeforeMethod;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -9,30 +9,28 @@ public class LoginTest extends TestBase{
     @Test
 
     public void loginSuccess(){
-        openLoginForm();
-        fillLoginForm("noa@gmail.com","Nnoa12345$");
-        submitForm();
-        Assert.assertTrue(isLogged());
+        app.userHelper().openLoginForm();
+        app.userHelper().fillLoginForm("noa@gmail.com","Nnoa12345$");
+        app.userHelper().submitForm();
+        Assert.assertTrue(app.userHelper().isLogged());
     }
 
     @Test
 
     public void negativeLoginWrongPassword(){
-        openLoginForm();
-        fillLoginForm("noa@gmail.com","N23456");
-        submitForm();
-        Assert.assertFalse(isLoggedSuccess());
+        app.userHelper().openLoginForm();
+        app.userHelper().fillLoginForm("noa@gmail.com","N23456");
+        app.userHelper().submitForm();
+        Assert.assertFalse(app.userHelper().isLoggedSuccess());
     }
   @AfterMethod
     public void postCondition(){
-        clickOkButton();
-       if(isLogoutPresent()) {
-           logout();
+        app.userHelper().clickOkButton();
+       if(app.userHelper().isLogoutPresent()) {
+           app.userHelper().logout();
 
-       }//logout
-    }
-
-
+        }//logout
+        }
 
         }
 
