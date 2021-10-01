@@ -4,7 +4,7 @@ import application.ApplicationManager;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
-public class TestBase {
+public class TestBase{
     protected static ApplicationManager app = new ApplicationManager();
 
     @BeforeClass

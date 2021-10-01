@@ -3,6 +3,7 @@ package application;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -63,7 +64,39 @@ public class UserHelper extends HelperBase {
 
     public void checkPolicy() {
         //click(By.xpath("//label[@for = 'terms-of-use']"));
-        JavascriptExecutor js =(JavascriptExecutor) wd;
-        js.executeScript("document.querySelector('#terms-of-use').checked=true;");
+       //click(By.id("terms-of-use"));
+
+
+     JavascriptExecutor js = (JavascriptExecutor) wd;
+     js.executeScript("document.querySelector('#terms-of-use').click();");
+     js.executeScript("document.querySelector('#terms-of-use').checked=true;");
     }
+
+    public boolean isRegistrationSuccess() {
+        //////********************************
+        new WebDriverWait(wd, 10).until(ExpectedConditions.visibilityOf(wd.findElement(By.className("dialog-container"))));
+        WebElement dialog = wd.findElement(By.cssSelector(".dialog-container h2"));
+        String message = dialog.getText();
+        return message.equals("You are logged in success");
+
+    }
+
+    public boolean isErrorPasswordDisplayed() throws InterruptedException {
+        // click(By.id("email"));
+        Thread.sleep(2000);
+        return isElementPresent(By.xpath("//div[@class='error']"));
+        public boolean isErrorPasswordDisplayed() {
+            // ******************************
+            // click(By.id("email"));
+            //return isElementPresent(By.xpath("//div[@class='error']"));
+            return isElementPresent(By.xpath("//*[text()='Password must contain minimum 8 symbols']"));
+
+        }
+
+        public boolean isYallaButtonActive() {
+            //return wd.findElement(By.xpath("//button[@type='submit']")).isSelected();
+            return isElementPresent(By.xpath("//button[@disabled]"));
+            return wd.findElement(By.xpath("//button[@type='submit']")).isSelected();
+            //return isElementPresent(By.xpath("//button[@disabled]"));
+        }
 }
